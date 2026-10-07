@@ -73,7 +73,7 @@ export class TaskManager {
     }
 
     //returns dummy copy of task
-    public getTaskByID(id : Number): Task | null {
+    public static getTaskByID(id : Number): Task | null {
         for (let i = 0; i < TaskManager._tasks.length; i++) {
             const task = TaskManager._tasks[i];
             if (task !== undefined && task.id === id){

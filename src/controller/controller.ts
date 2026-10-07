@@ -151,7 +151,7 @@ export class Controller {
                     this._interface.showMessage("[UY!] Debe ingresar un id valido.", "info");
                 } else {
                     if (this.isIdInTasks(selectedId, tasks)){
-                    return taskFun.getTaskByID(selectedId);
+                    return TaskManager.getTaskByID(selectedId);
                     } else {
                         this._interface.showMessage("[UY!] El ID que ha seleccionado no se encuentra en la lista.", "warning");
                     }
