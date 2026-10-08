@@ -1,4 +1,5 @@
+import { Controller } from "./controller/Controller.js";
 
-import { showMainMenu } from "./controller/Cont.js"; 
+const c = new Controller();
 
-showMainMenu();
+c.showMainMenu();

@@ -151,7 +151,7 @@ export class Controller {
                     this._interface.showMessage("[UY!] Debe ingresar un id valido.", "info");
                 } else {
                     if (this.isIdInTasks(selectedId, tasks)){
-                    return TaskManager.getTaskByID(selectedId);
+                    return TaskManager.getTaskDataByID(selectedId);
                     } else {
                         this._interface.showMessage("[UY!] El ID que ha seleccionado no se encuentra en la lista.", "warning");
                     }
@@ -178,6 +178,55 @@ export class Controller {
                     return TaskManager.getTasksToDisplay();
                 default:
                     this._interface.showMessage("[UY!] Debe ingresar una opcion valida del menu.","warning");
+                    break;
+            }
+        }
+    }
+
+    public showMainMenu(){
+        let option : string, task : Task | null;
+        while(true){
+            option = this._interface.askMainMenuOption();
+            switch (option.toUpperCase()) {
+                case "1":
+                    this.createTask();
+                    break;
+                case "2":
+                    task = this.selectTask();
+                    if (task !== null){
+                        this.editTask(task);
+                    }
+                    break;
+                case "3":
+                    task = this.selectTask();
+                    if (task !== null){
+                        this.cancelTask(task);
+                    }
+                    break;
+                case "4":
+                    task = this.selectTask();
+                    if (task !== null){
+                        this.editTask(task);
+                    }
+                    break;
+                case "5":
+                    let title = this._interface.askTitleToSearch();
+                    if (title !== null){
+                        task = this.selectTask(TaskManager.getTasksByTitle(title));
+                        if (task !== null){
+                            this.editTask(task);
+                        }
+                    } else {
+                        this._interface.showMessage("[<-] Volviendo al menu", "info");
+                    }
+                    break;
+                case "0":
+                    if (this._interface.askAreYouSure()){
+                        return;
+                    }
+                    break;
+                default:
+                    this._interface.showMessage("[UY!] Debe ingresar una opcion valida del menu", "warning");
                     break;
             }
         }

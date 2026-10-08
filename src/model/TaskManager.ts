@@ -73,11 +73,11 @@ export class TaskManager {
     }
 
     //returns dummy copy of task
-    public static getTaskByID(id : Number): Task | null {
+    public static getTaskDataByID(id : Number): Task | null{
         for (let i = 0; i < TaskManager._tasks.length; i++) {
             const task = TaskManager._tasks[i];
             if (task !== undefined && task.id === id){
-                ;
+                return new Task(task.title, task.description, task.status, task.difficulty, task.dueDate, task.id, task.creationDate, task.lastEditedDate);
             }
         }
         return null;
@@ -132,5 +132,17 @@ export class TaskManager {
         }
         return taskToDisplay;
     }
+
+    public static getTasksByTitle(title : string, tasks = TaskManager.getTasksToDisplay()) : {id:number, title:string, status: number}[] {
+        let taskToDisplayFiltered = [];
+        for (let i = 0; i < TaskManager._tasks.length; i++) {
+            const task = TaskManager._tasks[i];
+            if (task !== undefined && task.title.toLowerCase().indexOf(title) !== -1) {
+                taskToDisplayFiltered[taskToDisplayFiltered.length] = {title:task.title, id:task.id, status: task.status};
+            }
+        }
+        return taskToDisplayFiltered;
+    }
+    
     
 }

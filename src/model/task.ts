@@ -12,14 +12,20 @@ export class Task {
     private _dueDate: string = "";
     private _lastEditedDate: string = "";
 
-    constructor(title:string, description:string = "", status:number, difficulty:number, dueDate:string){
-        this._id = Task.nextId++;
+    constructor(title:string, description:string = "", status:number, difficulty:number, dueDate:string,id?:number, creationDate?:string, lastEditedDate?:string){
+        if (id !== undefined && creationDate !== undefined && lastEditedDate !== undefined){
+            this._id = id;
+            this._creationDate = creationDate;
+            this._lastEditedDate = lastEditedDate;
+        } else {
+            this._id = Task.nextId++;
+            let date = new Date();
+            this._creationDate = `${date.getDay()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}hs`;
+        }
         this.title = title;
         this.description = description;
         this.status = status;
         this.difficulty = difficulty;
-        let date = new Date();
-        this._creationDate = `${date.getDay()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}hs`;
         this.dueDate = dueDate;
     }
 

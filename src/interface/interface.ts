@@ -53,7 +53,7 @@ export class Interface {
         console.log("[3]-Terminada;");
         console.log("[4]-Quiero ver todas!;");
         console.log("[0]-Volver.");
-        return prompt(">");
+        return this.prompt(">");
     }
 
     public askTitleToSearch(){
@@ -188,8 +188,8 @@ export class Interface {
         console.log(`Estado: ${this.getStatusString(status)}`);
         console.log(`Dificultad: ${this.getDifficultyString(difficulty)}`);
         console.log(`Fecha de creacion: ${creationDate !== "" ? creationDate:"--/--/---- --:--hs."}`);
-        console.log(`Fecha de vencimiento: ${dueDate != null ? dueDate : "--/--/----."}`);
-        console.log(`Fecha de última edición: ${lastEditedDate !== null ? lastEditedDate : "--/--/----."}`);
+        console.log(`Fecha de vencimiento: ${dueDate !== "" ? dueDate : "--/--/----."}`);
+        console.log(`Fecha de última edición: ${lastEditedDate !== "" ? lastEditedDate : "--/--/----."}`);
         console.log("-----------------------------------");
     }
 

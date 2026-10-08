@@ -1,13 +1,12 @@
 export class TaskValidation{
     private static readonly PENDING = 1;
     private static readonly IN_PROGRESS = 2;
-    public static readonly CANCELLED = 3;
-    private static readonly COMPLETED = 4;
+    private static readonly COMPLETED = 3;
+    public static readonly CANCELLED = 4;
 
     public static readonly GETALL = 0;
 
-    private static readonly VALID_STATUS_CREATION = [TaskValidation.PENDING, TaskValidation.IN_PROGRESS, TaskValidation.COMPLETED]; //user can't create a task that's already cancelled. can create an already completed task as a way of keeping history of tasks already completed.
-
+    private static readonly VALID_STATUS_CREATION = [TaskValidation.PENDING, TaskValidation.IN_PROGRESS, TaskValidation.CANCELLED,TaskValidation.COMPLETED];
     private static readonly VALID_DIFFICULTIES = [1,2,3];
 
     public static isValidStatus(status:number){
