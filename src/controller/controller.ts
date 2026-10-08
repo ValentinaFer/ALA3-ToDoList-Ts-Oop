@@ -4,6 +4,7 @@ import { TaskManager } from "../model/TaskManager.js";
 
 export class Controller {
     private readonly _interface = new Interface();
+    private taskManager = new TaskManager();
 
     public createTask(){
         let option:string, title:string = "", description:string = "", dueDate: string = "";
@@ -32,7 +33,7 @@ export class Controller {
                     if (title === ""){
                         this._interface.showMessage("[UY!] El titulo de la tarea no puede estar vacio.", "warning");
                     } else {
-                        if (TaskManager.createTask(title, description, status, difficulty,dueDate)){
+                        if (this.taskManager.createTask(title, description, status, difficulty,dueDate)){
                             this._interface.showMessage("[Exito!] La tarea fue creada con exito.",  "success");
                         } else {
                             this._interface.showMessage("[Error!] La tarea no pudo ser creada.", "error");
@@ -72,7 +73,7 @@ export class Controller {
                     task.dueDate = this._interface.askDueDateMenu(task.dueDate);
                     break;
                 case "G":
-                        switch (TaskManager.editTask(task.id, task)) {
+                        switch (this.taskManager.editTask(task.id, task)) {
                             case "edited":
                                     this._interface.showMessage("[Exito!] La tarea fue editada con exito.", "success");
                                 break;
@@ -87,6 +88,8 @@ export class Controller {
                                 break;
                             case "not-found":
                                     this._interface.showMessage("[Error!] La tarea no fue encontrada para editar!", "error");
+                            case "error-in-editing":
+                                    this._interface.showMessage("[Error!] Sucedio un error inesperado al editar la tarea!", "error");
                         }
                     return;
                 case "C":
@@ -104,7 +107,7 @@ export class Controller {
         while (true){
             option = this._interface.askStateChange(task.status);
             if (option === "s"){
-                switch(TaskManager.cancelTask(task.id)){
+                switch(this.taskManager.cancelTask(task.id)){
                     case "cancelled":
                         this._interface.showMessage("[Exito!] La tarea fue cancelada con exito.", "success");
                         break;
@@ -151,7 +154,7 @@ export class Controller {
                     this._interface.showMessage("[UY!] Debe ingresar un id valido.", "info");
                 } else {
                     if (this.isIdInTasks(selectedId, tasks)){
-                    return TaskManager.getTaskDataByID(selectedId);
+                    return this.taskManager.getTaskDataByID(selectedId);
                     } else {
                         this._interface.showMessage("[UY!] El ID que ha seleccionado no se encuentra en la lista.", "warning");
                     }
@@ -173,9 +176,9 @@ export class Controller {
                 case 1:
                 case 2:
                 case 3:
-                    return TaskManager.getTasksToDisplay(option);
+                    return this.taskManager.getTasksToDisplay(option);
                 case 4:
-                    return TaskManager.getTasksToDisplay();
+                    return this.taskManager.getTasksToDisplay();
                 default:
                     this._interface.showMessage("[UY!] Debe ingresar una opcion valida del menu.","warning");
                     break;
@@ -206,13 +209,13 @@ export class Controller {
                 case "4":
                     task = this.selectTask();
                     if (task !== null){
-                        this.editTask(task);
+                        this._interface.showTaskAndWait(task);
                     }
                     break;
                 case "5":
                     let title = this._interface.askTitleToSearch();
                     if (title !== null){
-                        task = this.selectTask(TaskManager.getTasksByTitle(title));
+                        task = this.selectTask(this.taskManager.getTasksByTitle(title));
                         if (task !== null){
                             this.editTask(task);
                         }

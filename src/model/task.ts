@@ -20,7 +20,7 @@ export class Task {
         } else {
             this._id = Task.nextId++;
             let date = new Date();
-            this._creationDate = `${date.getDay()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}hs`;
+            this._creationDate = `${date.getDate()}/${date.getMonth()+1}/${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}hs`;
         }
         this.title = title;
         this.description = description;

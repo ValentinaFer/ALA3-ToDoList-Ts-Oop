@@ -110,7 +110,7 @@ export class Interface {
             console.log("[3] Terminada;");
             status = this.prompt(">");
             status = Number(status);
-            if (TaskValidation.isValidStatus(status)) {
+            if (TaskValidation.isValidStatus(status) && status !== TaskValidation.CANCELLED) {
                 return status;
             } else {
                 this.showMessage("[UY!] Debe ingresar un estado valido.", "warning");
@@ -180,6 +180,12 @@ export class Interface {
         console.log(`Fecha de última edición: ${task.lastEditedDate !== null ? task.lastEditedDate : "--/--/----."}`);
         console.log("-----------------------------------");
     }*/
+
+    public showTaskAndWait(task:Task){
+        this.showTask(task.title, task.description, task.status, task.difficulty, task.creationDate, task.dueDate, task.lastEditedDate);
+        console.log("Presione cualquier tecla para volver.");
+        this.prompt("");
+    }
 
     public showTask(title:string="", description:string="", status:number=1, difficulty:number=1, creationDate:string="", dueDate:string="", lastEditedDate:string=""){
         console.log("-----------------------------------");
